@@ -11,10 +11,14 @@ import java.util.stream.Collectors;
 public class Server {
     private ServerSocket serverSocket;
     private List<ClientHandlerThread> clients = new ArrayList<>();
+    private List<User> users = new ArrayList<>(); //
 
     public Server(int port) {
         try {
             this.serverSocket = new ServerSocket(port);
+
+            users.add(new User("diana", "1111"));
+            users.add(new User("john", "2222"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -26,15 +30,24 @@ public class Server {
             Socket clientSocket;
             try {
                 clientSocket = serverSocket.accept();
-                System.out.println("Nowy klient dołączył!");
                 ClientHandlerThread thread = new ClientHandlerThread(clientSocket, this);
                 clients.add(thread);
                 thread.start();
+                System.out.println("New client joined!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
         }
+    }
+
+    public User getUser(String login) {
+        for (User user : users) {
+            if (user.getLogin().equals(login)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public void removeClient(ClientHandlerThread client) {

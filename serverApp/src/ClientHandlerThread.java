@@ -24,6 +24,26 @@ public class ClientHandlerThread extends Thread {
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             writer = new PrintWriter(output, true);
             String message;
+
+            // Ожидаем логин и пароль
+            while ((message = reader.readLine()) != null) {
+                if (message.startsWith("LO")) {
+                    String[] credentials = message.substring(2).split(" ");
+                    if (credentials.length == 2) {
+                        String login = credentials[0];
+                        String password = credentials[1];
+                        if (authenticate(login, password)) {
+                            login(login);
+                            break;
+                        } else {
+                            send("ERR: Incorrect username or password");
+                        }
+                    }
+                }
+            }
+
+
+
             while ((message = reader.readLine()) != null){
                 String prefix = message.substring(0,2);
                 String postfix = message.substring(2);
@@ -47,6 +67,13 @@ public class ClientHandlerThread extends Thread {
             e.printStackTrace();
         }
     }
+
+
+    private boolean authenticate(String login, String password) {
+        User user = server.getUser(login);
+        return user != null && user.getPassword().equals(password);
+    }
+
 
     public void send(String message){
         writer.println(message);
