@@ -23,11 +23,7 @@ public class ServerHandlerThread extends Thread {
             writer = new PrintWriter(output, true);
             String message;
             while ((message = reader.readLine()) != null){
-//                if(message.startsWith("FI"))
-//                    receiveFile(message.substring(2));
-//                else
                     System.out.println(message);
-                //runCommand(message);
             }
         } catch (IOException e) {
             e.printStackTrace();

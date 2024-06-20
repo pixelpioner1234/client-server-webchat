@@ -5,11 +5,15 @@ import java.io.InputStreamReader;
 public class Main {
 
     public static void main(String[] args) {
-        ServerHandlerThread serverThread = new ServerHandlerThread("localhost", 5000);
+        ServerHandlerThread serverThread = new ServerHandlerThread("localhost", 8084);
         serverThread.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Login: ");
+        //System.out.println("Login: ");
+
+        // Запрос логина и пароля
+        System.out.println("Enter your username and password (for example, 'diana 1111'): ");
+
         try {
             String line = reader.readLine();
             serverThread.login(line);
