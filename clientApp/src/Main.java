@@ -9,10 +9,7 @@ public class Main {
         serverThread.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        //System.out.println("Login: ");
-
-        // Запрос логина и пароля
-        System.out.println("Enter your username and password (for example, 'diana 1111'): ");
+        System.out.println("Login: ");
 
         try {
             String line = reader.readLine();
